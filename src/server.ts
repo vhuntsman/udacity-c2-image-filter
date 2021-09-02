@@ -21,6 +21,9 @@ import { filterImageFromURL, deleteLocalFiles } from './util/util';
         }
         let path: string;
         path = await filterImageFromURL(image_url);
+        if (path.split(':')[0] === 'Error') {
+            return res.status(422).send(path);
+        }
         return res.status(200).sendFile(path, () => {
             deleteLocalFiles([path]);
         });
